@@ -33,6 +33,7 @@
       <!--<f7-link tab-link="#view-catalog" icon-ios="f7:list_fill" icon-aurora="f7:list_fill" icon-md="material:view_list" text="Catalog"></f7-link>-->
       <!--<f7-link tab-link="#view-settings" icon-ios="f7:settings_fill" icon-aurora="f7:settings_fill" icon-md="material:settings" text="Settings"></f7-link>-->
       <f7-link tab-link="#view-ahrs" icon-ios="f7:list_fill" icon-aurora="f7:list_fill" icon-md="material:view_list" text="AHRS"></f7-link>
+      <f7-link tab-link="#view-websocket" icon-ios="f7:list_fill" icon-aurora="f7:list_fill" icon-md="material:view_list" text="Websocket"></f7-link>
     </f7-toolbar>
 
     <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
@@ -47,6 +48,8 @@
     <!-- AHRS View -->
     <f7-view id="view-ahrs" name="ahrs" tab url="/ahrs/"></f7-view>
 
+    <!-- Websockets View -->
+    <f7-view id="view-websocket" name="websocket" tab url="/websocket/"></f7-view>
 
   </f7-views>
 

@@ -1,6 +1,7 @@
 
 import HomePage from '../pages/home.vue';
 import AhrsPage from '../pages/ahrs.vue';
+import WebsocketPage from '../pages/websocket.vue';
 
 import AboutPage from '../pages/about.vue';
 import FormPage from '../pages/form.vue';
@@ -20,6 +21,10 @@ var routes = [
   {
     path: '/ahrs/',
     component: AhrsPage,
+  },
+  {
+  path: '/websocket/',
+    component: WebsocketPage,
   },
   {
     path: '/about/',

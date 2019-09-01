@@ -4,19 +4,17 @@
 
     <f7-block-title>This is AHRS</f7-block-title>
 
-
     <f7-block>
       {{ahrsStatus}}
     </f7-block>
-<!--
+
     <f7-block>      
-      <ul id="logs">
+      <ul id="ahrsData">
         <li :key=index v-for="(value, name, index) in ahrsData">
           {{ name }}: {{ value }}
         </li>
       </ul>
     </f7-block>
--->
 
     <f7-block>
       <div id="pixi-ahrs"></div>
@@ -52,20 +50,19 @@ export default {
       altitude: 0,
       messages: [],
 
-      //colors: ["75F4F4", "90E0F3", "B8B3E9", "D999B9"],
-
-      ahrsData: "",
+      ahrsSocket: null,
       ahrsStatus: "disconnected",
+      ahrsData: "",
     };
   },
   created() {
-    window.addEventListener('keydown', this.onKeyDown);
-    window.addEventListener('keyup', this.onKeyUp);
+    //window.addEventListener('keydown', this.onKeyDown);
+    //window.addEventListener('keyup', this.onKeyUp);
   },
   beforeDestroy() {
     this.disconnectWebsocket();
-    window.removeEventListener('keydown', this.onKeyDown);
-    window.removeEventListener('keyup', this.onKeyUp);
+    //window.removeEventListener('keydown', this.onKeyDown);
+    //window.removeEventListener('keyup', this.onKeyUp);
     window.removeEventListener('resize', this.onWindowResize);
   },
   mounted() {
@@ -81,6 +78,7 @@ export default {
   },
   methods: {
 
+    /*
     onKeyDown(e) {
       var code = e.keyCode ? e.keyCode : e.which;
       this.pkeys[code]=true;
@@ -90,7 +88,8 @@ export default {
       var code = e.keyCode ? e.keyCode : e.which;
       this.pkeys[code]=false;
     },
-    
+    */
+
     onWindowResize(event) {
       this.renderer.resize(window.innerWidth, window.innerHeight);
     },
@@ -210,24 +209,28 @@ export default {
     },
 
     connectWebsocket() {
-      this.socket = new WebSocket(URL_GPS_WS);
-      this.socket.onopen = () => {
+      this.ahrsSocket = new WebSocket(URL_GPS_WS);
+
+      this.ahrsSocket.onopen = () => {
         this.ahrsStatus = "connected";
         
-        this.socket.onmessage = ({data}) => {
+        this.ahrsSocket.onmessage = ({data}) => {
           this.parseAhrsData(data);
+        };
+
+        this.ahrsSocket.onerror = (e) => {
+          console.log('error occurred!' + e);
+          this.ahrsData = { 'error': 'SOCKET-ERROR: ' + e};             
         };
       };
     },
 
     disconnectWebsocket() {
-      this.socket.close();
+      this.ahrsSocket.close();
       this.ahrsStatus = "disconnected";
-      this.logs = [];
     },
 
     parseAhrsData(data) {
-      //this.messages.push({ event: "Recieved message", data });
       
       let jsonData = (JSON.parse(data));
       this.ahrsData = jsonData;
@@ -241,7 +244,6 @@ export default {
     redraw() {
       this.renderer.render(this.stage);
     }
-
     
   }
 };

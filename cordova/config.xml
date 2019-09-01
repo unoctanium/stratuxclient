@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.unoctanium.stratuxme" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.unoctanium.stratuxme" version="1.0.0" 
+  xmlns="http://www.w3.org/ns/widgets"
+  xmlns:android="http://schemas.android.com/apk/res/android"  
+  xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>StratuxMe</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -16,6 +19,8 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-intent href="ws://*/*" />
+    <allow-intent href="wss://*/*" />
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
@@ -27,6 +32,9 @@
     <allow-navigation href="*" />
 
     <platform name="android">
+      <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+          <application android:usesCleartextTraffic="true" />
+      </edit-config>
       <preference name="StatusBarOverlaysWebView" value="false" />
       <preference name="android-minSdkVersion" value="21" />
       <preference name="SplashMaintainAspectRatio" value="true" />
