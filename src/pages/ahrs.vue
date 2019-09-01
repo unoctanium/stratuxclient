@@ -1,9 +1,24 @@
 <template>
   <f7-page name="ahrs">
     <f7-navbar title="AHRS"></f7-navbar>
+
     <f7-block-title>This is AHRS</f7-block-title>
+
+
     <f7-block>
-      <!--<div id="pixi-ahrs" tabindex="0" @keydown.up="onKeyUp" @keydown.down="onKeyDown" @keydown.left="onKeyLeft" @keydown.right="onKeyRight"></div>-->
+      {{ahrsStatus}}
+    </f7-block>
+<!--
+    <f7-block>      
+      <ul id="logs">
+        <li :key=index v-for="(value, name, index) in ahrsData">
+          {{ name }}: {{ value }}
+        </li>
+      </ul>
+    </f7-block>
+-->
+
+    <f7-block>
       <div id="pixi-ahrs"></div>
     </f7-block>
   </f7-page>
@@ -12,22 +27,35 @@
 <script>
 import * as PIXI from "pixi.js";
 
+var URL_HOST = "192.168.1.1";
+var URL_PORT = null;
+var URL_HOST_BASE = URL_HOST + ( URL_PORT ? ":" + URL_PORT : ""); 
+var URL_WS = "ws://"
+var URL_HTTP = "http://"
+
+var URL_GPS_WS = URL_WS + URL_HOST_BASE + "/situation";
+
 export default {
   name: "Ahrs",
   data() {
     return {
-      app: null,
-      colors: ["75F4F4", "90E0F3", "B8B3E9", "D999B9"],
+      //app: null,
+      renderer:null,
+      stage: null,
+      gLadder: null,
+      gLabels: null,
+      pkeys: [],
       pitch: 0,
       roll: 0,
       heading: 0,
       slipSkid: 0,
       altitude: 0,
       messages: [],
-      container: null,
-      gLadder: null,
-      gLabels: null,
-      pkeys: [],
+
+      //colors: ["75F4F4", "90E0F3", "B8B3E9", "D999B9"],
+
+      ahrsData: "",
+      ahrsStatus: "disconnected",
     };
   },
   created() {
@@ -35,6 +63,7 @@ export default {
     window.addEventListener('keyup', this.onKeyUp);
   },
   beforeDestroy() {
+    this.disconnectWebsocket();
     window.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('keyup', this.onKeyUp);
     window.removeEventListener('resize', this.onWindowResize);
@@ -46,25 +75,8 @@ export default {
       //Init
       this.onWindowResize()
     })
-
-    this.app = new PIXI.Application({
-      transparent: false,
-      antialias: true,
-      backgroundColor: 0x060606,
-    });
-    
-    let canvas = document.getElementById('pixi-ahrs');
-    canvas.appendChild(this.app.view);
-    
-    this.app.renderer.view.style.display = "block";
-    this.app.renderer.autoResize = true;
-    this.app.renderer.resize(window.innerWidth, window.innerHeight);
     this.initGraphics();
-
-    // Listen for animate update
-    this.app.ticker.add((delta) => {
-      this.gameLoop(delta);
-    });
+    this.connectWebsocket();
 
   },
   methods: {
@@ -80,32 +92,13 @@ export default {
     },
     
     onWindowResize(event) {
-      this.app.renderer.resize(window.innerWidth, window.innerHeight);
-    },
-
-    gameLoop(delta) {
-      
-      // INTERIM
-      // Keyboard events
-      //apply keys
-      if (this.pkeys[38]) { //up key
-        this.setPitch(1);
-      }
-      if (this.pkeys[40]) { //down key
-        this.setPitch(-1);
-      }
-      if (this.pkeys[39]) { //right
-        this.setRoll(1);
-      }
-      if (this.pkeys[37]) { //left
-        this.setRoll(-1);
-      }
+      this.renderer.resize(window.innerWidth, window.innerHeight);
     },
 
     gLadderDraw() {
       const g = this.gLadder;
-      const w = this.app.screen.width;
-      const h = this.app.screen.height;
+      const w = this.renderer.width;
+      const h = this.renderer.height;
 
       // Skybox
       g.lineStyle(0);
@@ -132,8 +125,8 @@ export default {
 
     gLabelsDraw() {
       const g = this.gLabels;
-      const w = this.app.screen.width;
-      const h = this.app.screen.height;
+      const w = this.renderer.width;
+      const h = this.renderer.height;
 
       // Arc
       g.lineStyle(2, 0xffffff)
@@ -146,35 +139,108 @@ export default {
     },
 
     initGraphics() {
+
+      // Read here about game loop control:
+      // https://github.com/pixijs/pixi.js/wiki/v5-Custom-Application-GameLoop
+      let ticker = PIXI.Ticker.shared;
+      // Set this to prevent starting this ticker when listeners are added.
+      // By default this is true only for the PIXI.Ticker.shared instance.
+      ticker.autoStart = false;
+      // FYI, call this to ensure the ticker is stopped. It should be stopped
+      // if you have not attempted to render anything yet.
+      ticker.stop();
+      // Call this when you are ready for a running shared ticker.
+      //ticker.start();
+      // To use the ticker loop:
+      //ticker.add(function (time) {
+      //    renderer.render(stage);
+      //});
+      // To update completely manual:
+      // function animate(time) {
+      //   ticker.update(time);
+      //   renderer.render(stage);
+      //   requestAnimationFrame(animate);
+      // }
+      // animate(performance.now());
+
+      this.renderer = new PIXI.Renderer({
+        transparent: false,
+        antialias: true,
+        backgroundColor: 0x060606,
+      });
+      
+      
+      let canvas = document.getElementById('pixi-ahrs');
+      canvas.appendChild(this.renderer.view);
+      
+      this.renderer.view.style.display = "block";
+      this.renderer.resize(window.innerWidth, window.innerHeight);
+
+
       // PIXI Container
-      this.container = new PIXI.Container()
+      this.stage = new PIXI.Container()
       // Move container to the center
-      this.container.x = this.app.screen.width / 2;
-      this.container.y = this.app.screen.height / 2;
+      this.stage.x = this.renderer.width / 2;
+      this.stage.y = this.renderer.height / 2;
       // Center container drawings in local container coordinates
-      this.container.pivot.x = this.container.width / 2;
-      this.container.pivot.y = this.container.height / 2;
-      // Add the container to the stage
-      this.app.stage.addChild(this.container);
+      this.stage.pivot.x = this.stage.width / 2;
+      this.stage.pivot.y = this.stage.height / 2;
+      // Add the stage to the rebderer
+      //this.renderer.addChild(this.stage);
 
       this.gLadder = new PIXI.Graphics();
       this.gLadderDraw();
-      this.container.addChild(this.gLadder);
+      this.stage.addChild(this.gLadder);
 
       this.gLabels = new PIXI.Graphics();
       this.gLabelsDraw();
-      this.container.addChild(this.gLabels);
+      this.stage.addChild(this.gLabels);
+
+      this.renderer.render(this.stage);
     },
 
     setPitch(degs) {
-      this.pitch += degs;
-      this.gLadder.y = this.pitch;
+      this.pitch = degs;
+      this.gLadder.y = this.pitch * 5.0;
     },
 
     setRoll(degs) {
-      this.roll += degs;
-      this.gLadder.rotation = this.roll * 0.01;
+      this.roll = degs;
+      this.gLadder.rotation = this.roll * Math.PI / 360.0;
     },
+
+    connectWebsocket() {
+      this.socket = new WebSocket(URL_GPS_WS);
+      this.socket.onopen = () => {
+        this.ahrsStatus = "connected";
+        
+        this.socket.onmessage = ({data}) => {
+          this.parseAhrsData(data);
+        };
+      };
+    },
+
+    disconnectWebsocket() {
+      this.socket.close();
+      this.ahrsStatus = "disconnected";
+      this.logs = [];
+    },
+
+    parseAhrsData(data) {
+      //this.messages.push({ event: "Recieved message", data });
+      
+      let jsonData = (JSON.parse(data));
+      this.ahrsData = jsonData;
+
+      this.setPitch(this.ahrsData["AHRSPitch"]);
+      this.setRoll(this.ahrsData["AHRSRoll"]);
+      this.redraw();
+          
+    },
+
+    redraw() {
+      this.renderer.render(this.stage);
+    }
 
     
   }
