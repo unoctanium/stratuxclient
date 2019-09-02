@@ -1,6 +1,6 @@
 <template>
-  <f7-page name="websocket">
-    <f7-navbar title="Websocket"></f7-navbar>
+  <f7-page name="debug-websocket">
+      <f7-navbar title="Debug Websocket" back-link="Back"></f7-navbar>
 
       <f7-block>  
       <f7-input

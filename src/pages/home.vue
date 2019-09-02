@@ -1,28 +1,26 @@
 <template>
   <f7-page name="home">
     <!-- Top Navbar -->
-    <f7-navbar :sliding="false" large>
-      <f7-nav-left>
-        <f7-link icon-ios="f7:menu" icon-aurora="f7:menu" icon-md="material:menu" panel-open="left"></f7-link>
-      </f7-nav-left>
+    <f7-navbar>
       <f7-nav-title sliding>StratuxMe</f7-nav-title>
+      <!--<f7-nav-right>
+        <f7-link icon-ios="f7:reload" icon-aurora="f7:reload" icon-md="material:compare_arrows" @click="blabla"></f7-link>
+      </f7-nav-right>-->
+      <!--<f7-nav-left>
+        <f7-link icon-ios="f7:menu" icon-aurora="f7:menu" icon-md="material:menu"></f7-link>
+      </f7-nav-left>
       <f7-nav-right>
         <f7-link icon-ios="f7:menu" icon-aurora="f7:menu" icon-md="material:menu" panel-open="right"></f7-link>
       </f7-nav-right>
-      <f7-nav-title-large sliding>StratuxMe</f7-nav-title-large>
+      <f7-nav-title-large sliding>StratuxMe</f7-nav-title-large>-->
     </f7-navbar>
 
-    <!-- Page content-->
-    <f7-block strong>
-      <p>This is an example of tabs-layout application. The main point of such tabbed layout is that each tab contains independent view with its own routing and navigation.</p>
+    <!-- Main Menu-->
 
-      <p>Each tab/view may have different layout, different navbar type (dynamic, fixed or static) or without navbar like this tab.</p>
-    </f7-block>
-
-    <f7-block-title>Navigation</f7-block-title>
+    <f7-block-title>Main Menu</f7-block-title>
     <f7-list>
       <f7-list-item link="/about/" title="About"></f7-list-item>
-      <f7-list-item link="/form/" title="Form"></f7-list-item>
+      
     </f7-list>
 
     <f7-block-title>Modals</f7-block-title>
