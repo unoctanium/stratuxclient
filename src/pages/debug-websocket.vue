@@ -2,39 +2,42 @@
   <f7-page name="debug-websocket">
       <f7-navbar title="Debug Websocket" back-link="Back"></f7-navbar>
 
-      <f7-block>  
-      <f7-input
-        label="URL"
-        type="text"
-        :value="url"
-        @input="url = $event.target.value"
-        placeholder="wss url"
-        clear-button
-      ></f7-input>
-      </f7-block>  
-      
-      <f7-block>  
-        <f7-button @click="disconnectWebsocket" v-if="socketStatus == 'connected'">Disconnect</f7-button>
-        <f7-button @click="connectWebsocket" v-if="socketStatus === 'disconnected'">Connect</f7-button>
-      </f7-block>
+      <f7-list>
+        <f7-list-input
+          label="URL"
+          type="text"
+          :value="url"
+          @input="url = $event.target.value"
+          placeholder="wss url"
+          clear-button
+          info="test with wss://echo.websocket.org"
+        ></f7-list-input>
 
-      <f7-block>
+        <f7-list-item>
+          <f7-button @click="disconnectWebsocket" v-if="socketStatus == 'connected'">Disconnect</f7-button>
+          <f7-button @click="connectWebsocket" v-if="socketStatus === 'disconnected'">Connect</f7-button>
+        </f7-list-item>
+
+        <f7-list-item>
           {{socketStatus}}
-      </f7-block>
+        </f7-list-item>
 
-      <f7-block>  
-        <f7-input
+        <f7-list-input
           label="Message"
           type="text"
           :value="message"
           @input="message = $event.target.value"
           placeholder="Message"
           clear-button
-        ></f7-input>
-        <f7-button @click="sendWebsocketMessage">Send</f7-button>
-      </f7-block>  
+        ></f7-list-input>
 
-      <f7-block v-if="socketStatus === 'connected'">      
+        <f7-list-item>
+          <f7-button @click="sendWebsocketMessage">Send</f7-button>
+        </f7-list-item>
+
+      </f7-list>
+
+      <f7-block v-if="socketStatus === 'connected'">
         {{socketData}}
       </f7-block>
 
@@ -45,7 +48,7 @@
 
 
 export default {
-  name: "Websocket",
+  name: "DebugWebsocket",
   data() {
     return {
       url: "wss://echo.websocket.org",

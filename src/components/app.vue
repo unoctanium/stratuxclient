@@ -1,5 +1,5 @@
 <template>
-<f7-app :params="f7params" color-theme="light-blue" theme-dark>
+<f7-app :params="f7params" color-theme="light-blue" _theme-dark>
   <!-- Status bar overlay for fullscreen mode-->
   <f7-statusbar></f7-statusbar>
 
