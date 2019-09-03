@@ -62,8 +62,9 @@ export default {
   methods: {
 
     connectWebsocket() {
-      this.socket = new WebSocket(this.url);
 
+      this.socket = new WebSocket(this.url);
+      
       this.socket.onopen = () => {
         this.socketStatus = "connected";
         
@@ -71,12 +72,24 @@ export default {
           this.parseWebsocketData(data);
         };
 
-        this.socket.onerror = (e) => {
-          console.log('error occurred!' + e);
-          this.message = "SOCKET-ERROR: " + e;             
+        this.socket.onerror = (error) => {
+          this.$f7.dialog.alert(error,"Error");
+          console.log('error occurred!' + error);
+          //this.message = "SOCKET-ERROR: " + error;             
         };
-
       };
+
+      this.socket.onclose = (event) => {
+          if (event.code == 1005) {
+            console.log('ws closed');        
+          } 
+          else {
+            this.$f7.dialog.alert("Can't open Websocket: " + this.url,"Error");
+            console.log('error occurred!');
+            console.log(event);
+          }
+          
+        }  
     },
 
     disconnectWebsocket() {

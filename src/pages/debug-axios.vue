@@ -59,6 +59,7 @@ export default {
               this.axiosResponseIp = result.data.origin;
               this.axiosResponse = result.data;
           }, error => {
+              this.$f7.dialog.alert(error,"Error");
               console.error(error);
           });
         },
@@ -67,6 +68,7 @@ export default {
               this.axiosResponseIp = result.data.origin;
               this.axiosResponse = result.data;
           }, error => {
+              this.$f7.dialog.alert(error,"Error");
               console.error(error);
           });
         }
