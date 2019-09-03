@@ -1,4 +1,5 @@
-
+// Import Framework7
+import Framework7 from 'framework7/framework7.esm.bundle.js';
 
 import HomePage from '../pages/home.vue';
 
@@ -19,6 +20,7 @@ import NotFoundPage from '../pages/404.vue';
 
 import DatalogPage from '../pages/datalog/datalog.vue';
 import StratuxTowersPage from '../pages/datalog/stratux-towers.vue';
+import StratuxDataPage from '../pages/datalog/stratux-data.vue';
 
 import DebugPage from '../pages/debug/debug.vue';
 import DebugWebsocketPage from '../pages/debug/debug-websocket.vue';
@@ -106,11 +108,67 @@ var routes = [
     path: '/datalog/',
     component: DatalogPage,
     routes: [
+      //{
+      //  path: 'towers2/',
+      //  component: StratuxTowersPage,
+      //  //componentUrl: 'http://www.welt.de',
+      //},
+
       {
-        path: 'towers/',
-        component: StratuxTowersPage,
-        //componentUrl: 'http://www.welt.de',
-      }
+        path: '/:endpoint/',
+        async: function (routeTo, routeFrom, resolve, reject) {         
+          //console.log(routeTo);
+          //console.log(routeTo.params.endpoint)
+          let ep = routeTo.params.endpoint
+          var stratux_url = "http://192.168.1.1/"
+          switch (ep) {
+            case 'towers':
+              stratux_url = stratux_url + "getTowers"
+              break;
+            case 'status':
+              stratux_url = stratux_url + "getStatus"
+              break;
+            case 'settings':
+              stratux_url = stratux_url + "getSettings"
+              break;
+                    
+            default:
+              console.log('Sorry, we are out of ' + ep + '.');
+          }
+
+          //Framework7.preloader.show()
+          Framework7.request({
+            url: stratux_url,
+            //data: '{data: 1}',
+            dataType: 'json',
+            method: 'GET',
+            cache: false,
+            crossDomain: true,
+            statusCode: {
+              404: function(xhr) {
+                  console.log('page not found');
+              }
+            },
+            success: function (data) {
+              //Framework7.preloader.hide();
+              resolve({
+                component: StratuxDataPage
+              }, 
+              {
+                props: {
+                  context: data,
+                }
+              })
+            },
+            error: function(error){
+              //Framework7.preloader.hide();
+              console.log('error');
+              console.log(error);
+            }
+          })
+        }
+      },
+
     ],
   },
   
