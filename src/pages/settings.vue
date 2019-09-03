@@ -1,6 +1,6 @@
 <template>
   <f7-page name="settings">
-    <f7-navbar title="Settings"></f7-navbar>
+    <f7-navbar title="Settings" back-link="Back"></f7-navbar>
 
     <f7-block-title>Form Example</f7-block-title>
     <f7-list no-hairlines-md>

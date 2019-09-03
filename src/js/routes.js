@@ -2,6 +2,7 @@
 
 import HomePage from '../pages/home.vue';
 
+import PanelDashboardPage from '../pages/panel-dashboard.vue';
 import PanelAPage from '../pages/panel-a.vue';
 import PanelBPage from '../pages/panel-b.vue';
 import PanelCPage from '../pages/panel-c.vue';
@@ -12,13 +13,16 @@ import GMeterPage from '../pages/g-meter.vue';
 import GpsPage from '../pages/gps.vue';
 import MapPage from '../pages/map.vue';
 import SettingsPage from '../pages/settings.vue';
-import DatalogPage from '../pages/datalog.vue';
-import DebugPage from '../pages/debug.vue';
+
 import AboutPage from '../pages/about.vue';
 import NotFoundPage from '../pages/404.vue';
 
-import DebugWebsocketPage from '../pages/debug-websocket.vue';
-import DebugAxiosPage from '../pages/debug-axios.vue';
+import DatalogPage from '../pages/datalog/datalog.vue';
+import StratuxTowersPage from '../pages/datalog/stratux-towers.vue';
+
+import DebugPage from '../pages/debug/debug.vue';
+import DebugWebsocketPage from '../pages/debug/debug-websocket.vue';
+import DebugAxiosPage from '../pages/debug/debug-axios.vue';
 
 // DELETE
 import FormPage from '../pages/_form.vue';
@@ -29,66 +33,102 @@ import RequestAndLoad from '../pages/_request-and-load.vue';
 
 
 var routes = [
+
   {
+    // Page main route
     path: '/',
+    // Will load page from tabs/index.html file
     component: HomePage, // Status Page
+    // Pass "tabs" property to route, must be array with tab routes:
+    
+    tabs: [
+      // First (default) tab has the same url as the page itself
+      {
+        path: '/',
+        id: 'tab-dashboard',
+        component: PanelDashboardPage, // Status Page
+      },
+      {
+        path: '/panel-a/',
+        id: 'tab-panel-a',
+        component: PanelAPage,
+      },
+      {
+        path: '/panel-b/',
+        id: 'tab-panel-b',
+        component: PanelBPage,
+      },
+      {
+        path: '/panel-c/',
+        id: 'tab-panel-c',
+        component: PanelCPage,
+      },
+      {
+        path: '/traffic/',
+        id: 'tab-traffic',
+        component: TrafficPage,
+      },
+      {
+        path: '/radar/',
+        id: 'tab-radar',
+        component: RadarPage,
+      },
+      {
+        path: '/ahrs/',
+        id: 'tab-ahrs',
+        component: AhrsPage,
+      },
+      {
+        path: '/gmeter/',
+        id: 'tab-gmeter',
+        component: GMeterPage,
+      },
+      {
+        path: '/gps/',
+        id: 'tab-gps',
+        component: GpsPage,
+      },
+      {
+        path: '/map/',
+        id: 'tab-map',
+        component: MapPage,
+      },
+     
+    ],
   },
-  {
-    path: '/panel-a/',
-    component: PanelAPage,
-  },
-  {
-    path: '/panel-b/',
-    component: PanelBPage,
-  },
-  {
-    path: '/panel-c/',
-    component: PanelCPage,
-  },
-  {
-    path: '/traffic/',
-    component: TrafficPage,
-  },
-  {
-    path: '/radar/',
-    component: RadarPage,
-  },
-  {
-    path: '/ahrs/',
-    component: AhrsPage,
-  },
-  {
-    path: '/gmeter/',
-    component: GMeterPage,
-  },
-  {
-    path: '/gps/',
-    component: GpsPage,
-  },
-  {
-    path: '/map/',
-    component: MapPage,
-  },
+
   {
     path: '/settings/',
     component: SettingsPage,
   },
+    
   {
     path: '/datalog/',
     component: DatalogPage,
+    routes: [
+      {
+        path: 'towers/',
+        component: StratuxTowersPage,
+        //componentUrl: 'http://www.welt.de',
+      }
+    ],
   },
+  
   {
     path: '/debug/',
     component: DebugPage,
+    routes: [
+      {
+        path: 'websocket/',
+        component: DebugWebsocketPage,
+      },
+      {
+        path: 'axios/',
+        component: DebugAxiosPage,
+      },
+    ]
   },
-  {
-    path: '/debug/websocket/',
-    component: DebugWebsocketPage,
-  },
-  {
-    path: '/debug/axios/',
-    component: DebugAxiosPage,
-  },
+  
   {
     path: '/about/',
     component: AboutPage,

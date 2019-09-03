@@ -1,6 +1,5 @@
 <template>
   <f7-page name="ahrs">
-    <f7-navbar title="AHRS"></f7-navbar>
 
     <f7-block-title>This is AHRS</f7-block-title>
 
