@@ -1,6 +1,6 @@
 <template>
   <f7-page name="stratux-data">
-    <f7-navbar title="$f7route.params.endpoint" back-link="Back"></f7-navbar>
+    <f7-navbar title="DDDDDDD" back-link="Back"></f7-navbar>
 
 {{ data }}
 

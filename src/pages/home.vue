@@ -3,7 +3,9 @@
 
     <f7-navbar :title="$f7.data.pageTitle">
       <f7-nav-right>
-        <f7-link icon-ios="f7:settings" icon-aurora="f7:settings" icon-md="material:settings" href="/settings/"></f7-link>
+        <!--<f7-link icon-ios="f7:bolt_round" icon-aurora="f7:bolt_round" icon-md="material:offline_bolt" href="/datalog/"></f7-link>-->
+        <f7-link popover-open=".popover-datalogs" icon-ios="f7:bolt_round" icon-aurora="f7:bolt_round" icon-md="material:offline_bolt"></f7-link>
+        <f7-link href="/settings/" icon-ios="f7:settings" icon-aurora="f7:settings" icon-md="material:settings"></f7-link>
       </f7-nav-right>
     </f7-navbar>
 
@@ -28,8 +30,33 @@
           <f7-list-item tab-link link="/gmeter/" title="G-Meter" class="popover-close"></f7-list-item>
           <f7-list-item tab-link link="/gps/" title="GPS" class="popover-close"></f7-list-item>
           <f7-list-item tab-link link="/map/" title="Map" class="popover-close"></f7-list-item>
-          <f7-list-item link="/datalog/" title="Data & Logs" class="popover-close"></f7-list-item>
-  	      <f7-list-item link="/debug/" title="Debug" class="popover-close"></f7-list-item>
+        </f7-list>
+      </f7-popover>
+
+      <f7-popover class="popover-datalogs">
+        <f7-block-title>Get Stratux Data</f7-block-title>
+        <f7-list>
+          <f7-list-item link="/datalog/getSettings/" title="Settings" class="popover-close"></f7-list-item>
+          <f7-list-item link="/datalog/getStatus/" title="Status" class="popover-close"></f7-list-item>
+          <f7-list-item link="/datalog/getSatellites/" title="Satellites" class="popover-close"></f7-list-item>
+          <f7-list-item link="/datalog/getTowers/" title="Towers" class="popover-close"></f7-list-item>
+        </f7-list>
+        <f7-block-title>Actions</f7-block-title>
+        <f7-list>
+          <f7-list-item link="/datalog/shutdown/" title="Shut down" class="popover-close"></f7-list-item>
+        </f7-list>
+        <f7-block-title>Live Data</f7-block-title>
+        <f7-list>
+          <f7-list-item link="/datalog/status/" title="Live Status" class="popover-close"></f7-list-item>
+          <f7-list-item link="/datalog/situation/" title="Situation" class="popover-close"></f7-list-item>
+          <f7-list-item link="/datalog/radar/" title="Radar" class="popover-close"></f7-list-item>
+          <f7-list-item link="/datalog/weather/" title="Weather" class="popover-close"></f7-list-item>
+          <f7-list-item link="/datalog/developer/" title="Developer Data" class="popover-close"></f7-list-item>
+        </f7-list>
+        <f7-block-title>Stratux Debug</f7-block-title>
+        <f7-list>
+          <f7-list-item link="/debug/websocket/" title="Websocket" class="popover-close"></f7-list-item>
+          <f7-list-item link="/debug/axios/" title="Axios" class="popover-close"></f7-list-item>
         </f7-list>
       </f7-popover>
 

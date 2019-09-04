@@ -19,10 +19,9 @@ import AboutPage from '../pages/about.vue';
 import NotFoundPage from '../pages/404.vue';
 
 import DatalogPage from '../pages/datalog/datalog.vue';
-import StratuxTowersPage from '../pages/datalog/stratux-towers.vue';
-import StratuxDataPage from '../pages/datalog/stratux-data.vue';
+//import StratuxTowersPage from '../pages/datalog/stratux-towers.vue';
+//import StratuxDataPage from '../pages/datalog/stratux-data.vue';
 
-import DebugPage from '../pages/debug/debug.vue';
 import DebugWebsocketPage from '../pages/debug/debug-websocket.vue';
 import DebugAxiosPage from '../pages/debug/debug-axios.vue';
 
@@ -35,6 +34,11 @@ import RequestAndLoad from '../pages/_request-and-load.vue';
 
 
 var routes = [
+
+  {
+    path: '/about/',
+    component: AboutPage,
+  },
 
   {
     // Page main route
@@ -105,7 +109,24 @@ var routes = [
   },
     
   {
-    path: '/datalog/',
+    path: '/datalog/:endpoint',
+    component: DatalogPage,
+  },
+  
+  {
+    path: '/debug/websocket',
+    component: DebugWebsocketPage,
+  },
+
+  {
+    path: '/debug/axios',
+    component: DebugAxiosPage,
+  },
+
+
+/*
+  {
+    path: '/datalog_routing/',
     component: DatalogPage,
     routes: [
       //{
@@ -113,6 +134,14 @@ var routes = [
       //  component: StratuxTowersPage,
       //  //componentUrl: 'http://www.welt.de',
       //},
+      {
+        path: '/websocket/',
+        component: DebugWebsocketPage,
+      },
+      {
+        path: '/axios/',
+        component: DebugAxiosPage,
+      },
 
       {
         path: '/:endpoint/',
@@ -171,26 +200,10 @@ var routes = [
 
     ],
   },
+  */
+ 
   
-  {
-    path: '/debug/',
-    component: DebugPage,
-    routes: [
-      {
-        path: 'websocket/',
-        component: DebugWebsocketPage,
-      },
-      {
-        path: 'axios/',
-        component: DebugAxiosPage,
-      },
-    ]
-  },
-  
-  {
-    path: '/about/',
-    component: AboutPage,
-  },
+ 
 
 
 // DELETE!!
