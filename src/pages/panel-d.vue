@@ -1,6 +1,6 @@
 <template>
-  <f7-page name="panel-c">
-    <f7-block-title>Panel C</f7-block-title>
+  <f7-page name="panel-d">
+    <f7-block-title>Panel D</f7-block-title>
   </f7-page>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   },
   /*
   mounted() {
-    this.$f7.data.pageTitle = "STRATUXme - Panel C"
+    this.$f7.data.pageTitle = "STRATUXme - Panel A"
   },
   */
   methods: {  

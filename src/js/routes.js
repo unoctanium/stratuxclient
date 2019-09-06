@@ -1,37 +1,46 @@
 // Import Framework7
-import Framework7 from 'framework7/framework7.esm.bundle.js';
+//import Framework7 from 'framework7/framework7.esm.bundle.js';
 
-import HomePage from '../pages/home.vue';
-
-import PanelDashboardPage from '../pages/panel-dashboard.vue';
-import PanelAPage from '../pages/panel-a.vue';
-import PanelBPage from '../pages/panel-b.vue';
-import PanelCPage from '../pages/panel-c.vue';
-import TrafficPage from '../pages/traffic.vue';
-import RadarPage from '../pages/radar.vue';
-import AhrsPage from '../pages/ahrs.vue';
-import GMeterPage from '../pages/g-meter.vue';
-import GpsPage from '../pages/gps.vue';
-import MapPage from '../pages/map.vue';
+// PAGES
+import HomePage from '../pages/home.vue'; // Menus, Tabs, Popups
 import SettingsPage from '../pages/settings.vue';
-
+import DatalogPage from '../pages/datalog/datalog.vue';
 import AboutPage from '../pages/about.vue';
 import NotFoundPage from '../pages/404.vue';
 
-import DatalogPage from '../pages/datalog/datalog.vue';
-//import StratuxTowersPage from '../pages/datalog/stratux-towers.vue';
-//import StratuxDataPage from '../pages/datalog/stratux-data.vue';
+// PANELS
+import APanel from '../pages/panel-a.vue';
+import BPanel from '../pages/panel-b.vue';
+import CPanel from '../pages/panel-c.vue';
+import DPanel from '../pages/panel-d.vue';
+import TabbarMore from '../pages/tabbar-more.vue';
 
-import DebugWebsocketPage from '../pages/debug/debug-websocket.vue';
-import DebugAxiosPage from '../pages/debug/debug-axios.vue';
+
+// PLATES
+
+import TrafficPlate from '../pages/plates/traffic.vue';
+import RadarPlate from '../pages/plates/radar.vue';
+import AhrsPlate from '../pages/plates/ahrs.vue';
+import GMeterPlate from '../pages/plates/g-meter.vue';
+import GpsPlate from '../pages/plates/gps.vue';
+import MapPlate from '../pages/plates/map.vue';
+import TowersPlate from '../pages/plates/towers.vue'
+import WeatherPlate from '../pages/plates/weather.vue'
+
 
 // DELETE
+/*
+//import StratuxTowersPage from '../pages/datalog/stratux-towers.vue';
+//import StratuxDataPage from '../pages/datalog/stratux-data.vue';
+//import DebugWebsocketPage from '../pages/debug/debug-websocket.vue';
+//import DebugAxiosPage from '../pages/debug/debug-axios.vue';
+
 import FormPage from '../pages/_form.vue';
 import CatalogPage from '../pages/_catalog.vue';
 import ProductPage from '../pages/_product.vue';
 import DynamicRoutePage from '../pages/_dynamic-route.vue';
 import RequestAndLoad from '../pages/_request-and-load.vue';
-
+*/
 
 var routes = [
 
@@ -43,65 +52,81 @@ var routes = [
   {
     // Page main route
     path: '/',
-    // Will load page from tabs/index.html file
-    component: HomePage, // Status Page
+    component: HomePage, // Menues and Tabs
     // Pass "tabs" property to route, must be array with tab routes:
     
     tabs: [
       // First (default) tab has the same url as the page itself
       {
         path: '/',
-        id: 'tab-dashboard',
-        component: PanelDashboardPage, // Status Page
-      },
-      {
-        path: '/panel-a/',
         id: 'tab-panel-a',
-        component: PanelAPage,
+        component: APanel, // Status Page
       },
       {
         path: '/panel-b/',
         id: 'tab-panel-b',
-        component: PanelBPage,
+        component: BPanel,
       },
       {
         path: '/panel-c/',
         id: 'tab-panel-c',
-        component: PanelCPage,
+        component: CPanel,
       },
       {
-        path: '/traffic/',
-        id: 'tab-traffic',
-        component: TrafficPage,
+        path: '/panel-d/',
+        id: 'tab-panel-d',
+        component: DPanel,
       },
       {
-        path: '/radar/',
-        id: 'tab-radar',
-        component: RadarPage,
+        path: '/tabbar-more/',
+        id: 'tab-more',
+        component: TabbarMore,
       },
-      {
-        path: '/ahrs/',
-        id: 'tab-ahrs',
-        component: AhrsPage,
-      },
-      {
-        path: '/gmeter/',
-        id: 'tab-gmeter',
-        component: GMeterPage,
-      },
-      {
-        path: '/gps/',
-        id: 'tab-gps',
-        component: GpsPage,
-      },
-      {
-        path: '/map/',
-        id: 'tab-map',
-        component: MapPage,
-      },
-     
+      
     ],
   },
+
+  {
+    path: '/traffic/:plate',
+    id: 'tab-traffic',
+    component: TrafficPlate,
+  },
+  {
+    path: '/radar/',
+    id: 'tab-radar',
+    component: RadarPlate,
+  },
+  {
+    path: '/ahrs/',
+    id: 'tab-ahrs',
+    component: AhrsPlate,
+  },
+  {
+    path: '/gmeter/',
+    id: 'tab-gmeter',
+    component: GMeterPlate,
+  },
+  {
+    path: '/gps/',
+    id: 'tab-gps',
+    component: GpsPlate,
+  },
+  {
+    path: '/map/',
+    id: 'tab-map',
+    component: MapPlate,
+  },
+  {
+    path: '/towers/',
+    id: 'tab-towers',
+    component: TowersPlate,
+  },
+  {
+    path: '/weather/',
+    id: 'tab-weather',
+    component: WeatherPlate,
+  },
+
 
   {
     path: '/settings/',
@@ -113,6 +138,7 @@ var routes = [
     component: DatalogPage,
   },
   
+  /*
   {
     path: '/debug/websocket',
     component: DebugWebsocketPage,
@@ -122,7 +148,7 @@ var routes = [
     path: '/debug/axios',
     component: DebugAxiosPage,
   },
-
+*/
 
 /*
   {
@@ -207,6 +233,7 @@ var routes = [
 
 
 // DELETE!!
+/*
   {
     path: '/form/',
     component: FormPage,
@@ -273,6 +300,8 @@ var routes = [
       }, 1000);
     },
   },
+  */
+
   // KEEP!!
   {
     path: '(.*)',

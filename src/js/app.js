@@ -17,13 +17,29 @@ import '../css/app.css';
 // Import App Component
 import App from '../components/app.vue';
 
+// import store
+import store from '../js/store.js'
+
 // Init Framework7-Vue Plugin
 Framework7.use(Framework7Vue);
 
 // Init App
 new Vue({
   el: '#app',
+  
   render: (h) => h(App),
+  
+  store,
+
+  created () {
+    // Add event listeners for network status change
+    window.addEventListener('offline', () => {
+      store.dispatch('setConnected', false)
+    })
+    window.addEventListener('online', () => {
+      store.dispatch('setConnected', true)
+    })
+  },
 
   // Register App Component
   components: {

@@ -1,5 +1,5 @@
 <template>
-  <f7-page name="home">
+  <f7-page name="panel-a">
 
     <f7-block-title>Dashboard Menu</f7-block-title>
     <f7-list>
@@ -49,3 +49,19 @@
   </f7-page>
 
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+    }
+  },
+  /*
+  mounted() {
+    this.$f7.data.pageTitle = "STRATUXme - Overwiew"
+  },
+  */
+  methods: {  
+  }
+}
+</script>

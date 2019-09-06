@@ -38,7 +38,7 @@
         f7params: {
           id: 'io.unoctanium.stratuxme', // App bundle ID
           name: 'StratuxMe', // App name
-          theme: 'aurora', // Automatic theme detection
+          theme: 'ios', // Automatic theme detection
           // App root data
           data: function () {
             return {
@@ -80,3 +80,11 @@
     }
   }
 </script>
+
+<style>
+.list
+.item-content
+{
+  min-height: 49px;
+}
+</style>

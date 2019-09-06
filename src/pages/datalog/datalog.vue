@@ -11,7 +11,7 @@
 
 <script>
 
-import StratuxApi from "@/js/stratux-api"
+import stratux from "@/js/stratux"
 import axios from "axios"
 
 export default {
@@ -28,7 +28,7 @@ export default {
   },
   mounted() {
     this.endpoint = this.$f7route.params.endpoint
-    this.api = StratuxApi[this.endpoint] // undefined: api error    
+    this.api = stratux.api[this.endpoint] // undefined: api error    
     this.load()
   },
   beforeDestroy() {
