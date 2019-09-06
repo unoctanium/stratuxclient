@@ -1,17 +1,26 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import stratux from './stratux.js'
+//import stratux from './stratux.js'
+
+import stratux from './store-stratux'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+
+  modules: {
+    stratux
+  },
+
   state: {
     settings: null,
     connected: navigator.onLine,
-    status: null,
+    status: "hi",
     towers: null,
     traffic: null,
+
+
   },
 
   getters: {
@@ -48,22 +57,22 @@ export default new Vuex.Store({
     },
 
     getStatus ({ commit }) {
-      const payload = stratux.getStatus()
+      const payload = "non" //stratux.getStatus()
       commit('SET_STATUS', payload)
     },
 
     getSettings ({ commit }) {
-      const payload = stratux.getSettings()
+      const payload = "non" //stratux.getSettings()
       commit('SET_SETTINGS', payload)
     },
 
     getTowers ({ commit }) {
-      const payload = stratux.getTowers()
+      const payload = "non" //stratux.getTowers()
       commit('SET_TOWERS', payload)
     },
 
     getTraffic ({ commit }) {
-      const payload = stratux.getTraffic()
+      const payload = "non" //stratux.getTraffic()
       commit('SET_TRAFFIC', payload)
     },
 

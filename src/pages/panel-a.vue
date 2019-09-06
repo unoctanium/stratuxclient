@@ -5,6 +5,7 @@
         <span class="badge" :class="'color-' + item.status" slot="media"></span>
       </f7-list-item>
     </f7-list>
+    {{Uptime}}
   </f7-page>
 
 </template>
@@ -36,7 +37,11 @@ export default {
   computed: {
     connected: function() { return (this.$store.getters['connected'] )},
     status: function() { return (this.$store.getters['status'] )},
-    settings: function() { return (this.$store.getters['settings'] )}
+    settings: function() { return (this.$store.getters['settings'] )},
+
+    Uptime: function() { return (this.$store.getters['stratux/Uptime'] )}
+
+
   },
   methods: {  
 

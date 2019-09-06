@@ -20,6 +20,12 @@ import App from '../components/app.vue';
 // import store
 import store from '../js/store.js'
 
+// import stratux
+import stratux from '../js/stratux.js'
+
+
+//import ContactsListComponent from 'framework7/components/contacts-list/contacts-list';
+
 // Init Framework7-Vue Plugin
 Framework7.use(Framework7Vue);
 
@@ -39,6 +45,12 @@ new Vue({
     window.addEventListener('online', () => {
       store.dispatch('setConnected', true)
     })
+  },
+
+
+  mounted() {
+    //stratux.startController(store)
+    store.dispatch('stratux/startController')
   },
 
   // Register App Component

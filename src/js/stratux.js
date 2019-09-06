@@ -4,7 +4,7 @@ let URL_HOST_BASE           = "192.168.1.1"; // TODO: ODO: We must put this in s
 let URL_HOST_PROTOCOL       = "http://" // window.location.protocol + "//";
 let URL_WS_PROTOCOL         = "ws://";
 
-const stratux = 
+var stratux = 
 {
   api: {
     "cageAHRS":           { method: "POST", url: URL_HOST_PROTOCOL + URL_HOST_BASE + "/cageAHRS", name: "" },
@@ -27,9 +27,9 @@ const stratux =
     "getTowers":          { method: "GET",  url: URL_HOST_PROTOCOL + URL_HOST_BASE + "/getTowers", name: "Towers" },
     "updateUpload":       { method: "POST", url: URL_HOST_PROTOCOL + URL_HOST_BASE + "/updateUpload", name: "" },
     "developer":          { method: "SOCK", url: URL_WS_PROTOCOL   + URL_HOST_BASE + "/developer", name: "Developer" },
-    "situation":         { method: "SOCK", url: URL_WS_PROTOCOL   + URL_HOST_BASE + "/situation", name: "Situations" },
+    "situation":          { method: "SOCK", url: URL_WS_PROTOCOL   + URL_HOST_BASE + "/situation", name: "Situations" },
     "status":             { method: "SOCK", url: URL_WS_PROTOCOL   + URL_HOST_BASE + "/status", name: "Status" },
-     "weather":            { method: "SOCK", url: URL_WS_PROTOCOL   + URL_HOST_BASE + "/weather", name: "Weather" },
+    "weather":            { method: "SOCK", url: URL_WS_PROTOCOL   + URL_HOST_BASE + "/weather", name: "Weather" },
     "radar":              { method: "SOCK", url: URL_WS_PROTOCOL   + URL_HOST_BASE + "/radar", name: "Radar" },
   },
 
@@ -60,6 +60,36 @@ const stratux =
       data: 0,
     }
   },
+
+
+  astartController() {
+
+    var timer
+
+    function startInterval () {
+      timer = setInterval(function(){
+        update()
+      }, 1000);
+    }
+
+    function update() {
+      console.log("jo")
+    }
+
+    startInterval()
+
+
+  },
+
+
+
+  
+
+
+
+
+
+
 
 
 }
